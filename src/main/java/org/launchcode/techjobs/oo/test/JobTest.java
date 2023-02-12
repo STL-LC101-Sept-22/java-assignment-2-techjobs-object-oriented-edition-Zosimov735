@@ -45,4 +45,28 @@ public class JobTest {
 
         assertFalse(job1.equals(job2));
     }
+
+    @Test
+    public void testToStringStartsAndEndsWithNewLine(){
+        Job job1 = new Job("Application programmer", new Employer("Anacomp"), new Location("Maryland Heights"), new PositionType("Full Stack Developer"), new CoreCompetency("EVERYTHING"));
+        Job job2 = new Job();
+        job2.setEmployer(new Employer(""));
+        assertEquals('\n', job1.toString().charAt(0));
+        assertEquals('\n', job1.toString().charAt(job1.toString().length() - 1));
+    }
+
+    @Test
+    public void testToStringContainsCorrectLabelsAndData(){
+        Job job1 = new Job("Application programmer", new Employer("Anacomp"), new Location("Maryland Heights"), new PositionType("Full Stack Developer"), new CoreCompetency("EVERYTHING"));
+
+        assertEquals("\n" + "ID: " + job1.getId() + "\n" + "Name: " + job1.getName() + "\n" + "Employer: " + job1.getEmployer().getValue() + "\n" + "Location: " + job1.getLocation().getValue() + "\n" + "Position Type: " + job1.getPositionType().getValue() +"\n" +"Core Competency: " + job1.getCoreCompetency().getValue() + "\n" ,job1.toString());
+    }
+
+    @Test
+    public void testToStringHandlesEmptyField(){
+        Job job1 = new Job("null", new Employer(null), new Location(null), new PositionType(null), new CoreCompetency(null));
+        String errorMessage = "Data not available";
+        assertEquals("\n" + "ID: " + job1.getId() + "\n" + "Name: " + "null" + "\n" + "Employer: " + errorMessage + "\n" + "Location: " + errorMessage + "\n" + "Position Type: " + errorMessage +"\n" +"Core Competency: " + errorMessage + "\n", job1.toString());
+    }
+
 }

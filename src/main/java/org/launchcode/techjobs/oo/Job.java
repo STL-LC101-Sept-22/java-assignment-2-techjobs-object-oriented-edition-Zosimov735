@@ -46,6 +46,39 @@ public class Job {
         return Objects.hash(id);
     }
 
+    @Override
+    public String toString(){
+        String errorMessage = "Data not available";
+        int jobId = this.getId();
+        String jobName = this.getName();
+        String jobEmployer = this.getEmployer().getValue();
+        String jobLocation = this.getLocation().getValue();
+        String jobCoreComp = this.getCoreCompetency().getValue();
+        String jobPositionType = this.getPositionType().getValue();
+
+
+        if (jobName == null || jobName == ""){
+            this.setName(errorMessage);
+        }
+        if (jobEmployer == null || jobEmployer == ""){
+            this.setEmployer(new Employer(errorMessage));
+        }
+        if (jobLocation == null || jobLocation == ""){
+            this.setLocation(new Location(errorMessage));
+        }
+        if (jobCoreComp == null || jobCoreComp == ""){
+            this.setCoreCompetency(new CoreCompetency(errorMessage));
+        }
+        if (jobPositionType == null || jobPositionType == ""){
+            this.setPositionType(new PositionType(errorMessage));
+        }
+        if (jobName == null && jobEmployer == null && jobCoreComp == null && jobPositionType == null && jobId > 0){
+            return "OOPS! This job does not seem to exist.";
+        }
+        String output = "\n" + "ID: " + this.getId() + "\n" + "Name: " + this.getName() + "\n" + "Employer: " + this.getEmployer().getValue() + "\n" + "Location: " + this.getLocation().getValue() + "\n" + "Position Type: " + this.getPositionType().getValue() +"\n" +"Core Competency: " + this.getCoreCompetency().getValue() + "\n";
+        return output;
+    }
+
 
     // TODO: Add getters for each field EXCEPT nextId. Add setters for each field EXCEPT nextID
     //  and id.
@@ -94,4 +127,6 @@ public class Job {
     public void setCoreCompetency(CoreCompetency coreCompetency) {
         this.coreCompetency = coreCompetency;
     }
+
 }
+
